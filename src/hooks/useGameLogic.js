@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 const words = ["ЯГНЯ", "ТЕЛЯ", "КОТЕНЯ", "ВЕДМЕДИК", "СЛОНЕНЯ"];
 
 function shuffle(word) {
-  return word.split("").sort(() => Math.random() - 0.5).join("");
+  const arr = word.split("");
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.join("");
 }
 
 export function useGameLogic() {
@@ -29,6 +34,7 @@ export function useGameLogic() {
     if (userInput.toUpperCase() === currentWord) {
       setScore((prev) => prev + 1);
     }
+
     if (round === 5) {
       setIsFinished(true);
     } else {
