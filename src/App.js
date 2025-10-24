@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/App.css';
 import Header from './components/Header';
 import StartPage from './pages/StartPage';
@@ -21,12 +21,15 @@ function App() {
     restartGame,
   } = useGameLogic();
 
-  const handleStart = () => setPage('game');
+  // Виклик handleFinish лише через useEffect
+  useEffect(() => {
+    if (isFinished) {
+      setFinalScore(score);
+      setPage('result');
+    }
+  }, [isFinished, score]);
 
-  const handleFinish = (scoreFromGame) => {
-    setFinalScore(scoreFromGame);
-    setPage('result');
-  };
+  const handleStart = () => setPage('game');
 
   const handleRestart = () => {
     restartGame();
@@ -37,9 +40,7 @@ function App() {
     switch (page) {
       case 'start':
         return <StartPage onStart={handleStart} />;
-
       case 'game':
-        if (isFinished) handleFinish(score);
         return (
           <GamePage
             round={round}
@@ -48,13 +49,10 @@ function App() {
             userInput={userInput}
             setUserInput={setUserInput}
             checkAnswer={checkAnswer}
-            onFinish={() => handleFinish(score)}
           />
         );
-
       case 'result':
         return <ResultPage score={finalScore} onRestart={handleRestart} />;
-
       default:
         return null;
     }
