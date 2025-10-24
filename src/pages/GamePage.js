@@ -1,22 +1,14 @@
-import React from 'react';
-import Button from '../components/Button';
-import { useGameLogic } from '../hooks/useGameLogic';
+import React from "react";
+import Button from "../components/Button";
 
-export default function GamePage({ onFinish }) {
-  const {
-    round,
-    score,
-    scrambledWord,
-    userInput,
-    setUserInput,
-    checkAnswer,
-    isFinished,
-  } = useGameLogic();
-
-  if (isFinished) {
-    onFinish(score);
-  }
-
+export default function GamePage({
+  round,
+  score,
+  scrambledWord,
+  userInput,
+  setUserInput,
+  checkAnswer,
+}) {
   return (
     <div className="page game-page">
       <h2>Раунд {round} з 5</h2>
@@ -31,9 +23,8 @@ export default function GamePage({ onFinish }) {
         className="input"
       />
 
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ marginTop: "20px" }}>
         <Button text="Перевірити ✅" onClick={checkAnswer} />
-        <Button text="Завершити гру ❌" type="secondary" onClick={() => onFinish(score)} />
       </div>
     </div>
   );
