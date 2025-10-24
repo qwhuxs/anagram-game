@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.page {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.scrambled {
+  font-size: 32px;
+  letter-spacing: 6px;
+  margin: 20px 0;
+}
+
+.input {
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+}
