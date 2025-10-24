@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import Button from '../components/Button';
+import React, { useEffect } from "react";
+import Button from "../components/Button";
 
 export default function GamePage({
   round,
@@ -8,11 +8,15 @@ export default function GamePage({
   userInput,
   setUserInput,
   checkAnswer,
-  onFinish
+  isFinished,
+  onAbort, 
+  onFinish, 
 }) {
-
   useEffect(() => {
-  }, []);
+    if (isFinished) {
+      onFinish();
+    }
+  }, [isFinished, onFinish]);
 
   return (
     <div className="page game-page">
@@ -28,13 +32,9 @@ export default function GamePage({
         className="input"
       />
 
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ marginTop: "20px" }}>
         <Button text="Перевірити ✅" onClick={checkAnswer} />
-        <Button
-          text="Завершити гру ❌"
-          type="secondary"
-          onClick={onFinish} 
-        />
+        <Button text="Завершити гру ❌" type="secondary" onClick={onAbort} />
       </div>
     </div>
   );
