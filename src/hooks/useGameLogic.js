@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 const words = ["ЯГНЯ", "ТЕЛЯ", "КОТЕНЯ", "ВЕДМЕДИК", "СЛОНЕНЯ"];
 
 function shuffle(word) {
-  return word.split("").sort(() => Math.random() - 0.5).join("");
+  return word
+    .split("")
+    .sort(() => Math.random() - 0.5)
+    .join("");
 }
 
 export function useGameLogic() {
@@ -12,7 +15,6 @@ export function useGameLogic() {
   const [currentWord, setCurrentWord] = useState("");
   const [scrambledWord, setScrambledWord] = useState("");
   const [userInput, setUserInput] = useState("");
-  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     startNewRound();
@@ -26,32 +28,33 @@ export function useGameLogic() {
   };
 
   const checkAnswer = () => {
+    let newScore = score;
     if (userInput.toUpperCase() === currentWord) {
-      setScore((prev) => prev + 1);
+      newScore += 1;
+      setScore(newScore);
     }
-    if (round === 5) {
-      setIsFinished(true);
+
+    if (round >= 5) {
+      return { finished: true, score: newScore };
     } else {
-      setRound((prev) => prev + 1);
+      setRound(round + 1);
       startNewRound();
+      return { finished: false };
     }
   };
 
   const restartGame = () => {
     setRound(1);
     setScore(0);
-    setIsFinished(false);
     startNewRound();
   };
 
   return {
     round,
     score,
-    currentWord,
     scrambledWord,
     userInput,
     setUserInput,
-    isFinished,
     checkAnswer,
     restartGame,
   };
