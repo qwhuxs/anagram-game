@@ -15,7 +15,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +35,97 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.page {
+  text-align: center;
+  margin-top: 50px;
+  background-color: #f7f9fc;
+  min-height: 90vh;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.scrambled {
+  font-size: 36px;
+  letter-spacing: 8px;
+  margin: 20px 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.input {
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 2px solid #61dafb;
+  width: 250px;
+  text-align: center;
+  transition: border 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #4bb0e1;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background-color: #61dafb;
+  color: #000;
+}
+
+.btn-primary:hover {
+  background-color: #4bb0e1;
+}
+
+.btn-secondary {
+  background-color: #bbb;
+  color: #000;
+}
+
+.btn-secondary:hover {
+  background-color: #999;
+}
+
+.answer-correct {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.answer-wrong {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+  color: #282c34;
+}
+
+.header {
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 36px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
