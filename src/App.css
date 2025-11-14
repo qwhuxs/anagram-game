@@ -1,83 +1,80 @@
-.App {
-  text-align: center;
-}
+/* ========== GLOBAL ========== */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body {
+  background: #eef3f8;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .page {
   text-align: center;
-  margin-top: 50px;
-  background-color: #f7f9fc;
-  min-height: 90vh;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  max-width: 600px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  animation: fadeIn 0.3s ease;
 }
 
-.scrambled {
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== HEADER ========== */
+
+.header {
+  background: linear-gradient(135deg, #61dafb, #4bb0e1);
+  color: white;
+  text-align: center;
+  padding: 22px 0;
   font-size: 36px;
-  letter-spacing: 8px;
-  margin: 20px 0;
-  color: #333;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.header h1 {
+  margin: 0;
+}
+
+/* ========== GAME ========== */
+
+.scrambled {
+  font-size: 38px;
+  letter-spacing: 10px;
+  margin: 25px 0;
+  color: #222;
   font-weight: bold;
 }
 
 .input {
   padding: 12px;
-  font-size: 18px;
-  border-radius: 8px;
+  font-size: 20px;
+  border-radius: 10px;
   border: 2px solid #61dafb;
-  width: 250px;
+  width: 280px;
   text-align: center;
-  transition: border 0.3s;
+  transition: 0.25s;
 }
 
 .input:focus {
   outline: none;
   border-color: #4bb0e1;
+  box-shadow: 0 0 8px rgba(75,176,225,0.4);
 }
 
+/* ========== BUTTONS ========== */
+
 .btn {
-  padding: 10px 20px;
+  padding: 12px 22px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   margin: 8px;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .btn:hover {
@@ -86,7 +83,7 @@
 
 .btn-primary {
   background-color: #61dafb;
-  color: #000;
+  color: black;
 }
 
 .btn-primary:hover {
@@ -94,13 +91,15 @@
 }
 
 .btn-secondary {
-  background-color: #bbb;
-  color: #000;
+  background-color: #d6d6d6;
+  color: black;
 }
 
 .btn-secondary:hover {
-  background-color: #999;
+  background-color: #bfbfbf;
 }
+
+/* ========== ANSWERS ========== */
 
 .answer-correct {
   background-color: #d4edda;
@@ -114,18 +113,95 @@
   color: #721c24;
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 36px;
-  color: #282c34;
+/* ========== FORMS ========== */
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 80%;
+  margin: 20px auto;
 }
 
-.header {
-  background-color: #28a745;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-  font-size: 36px;
+.settings-form label {
+  font-size: 18px;
   font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.settings-form input,
+.settings-form select {
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 2px solid #61dafb;
+  transition: 0.25s;
+}
+
+.settings-form input:focus,
+.settings-form select:focus {
+  border-color: #4bb0e1;
+  box-shadow: 0 0 8px rgba(75,176,225,0.4);
+}
+
+/* ========== MODAL ========== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-window {
+  background: white;
+  padding: 30px;
+  width: 360px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  animation: popIn 0.25s ease;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ========== TIMER ========== */
+
+.timer {
+  font-size: 22px;
+  color: #cc0000;
+  font-weight: bold;
+}
+
+/* ========== MEDIA ========== */
+
+@media (max-width: 480px) {
+  .page {
+    padding: 20px;
+  }
+
+  .scrambled {
+    font-size: 30px;
+    letter-spacing: 6px;
+  }
+
+  .modal-window {
+    width: 90%;
+  }
 }
