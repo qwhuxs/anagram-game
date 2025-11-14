@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
+import GameFinishModal from "../components/GameFinishModal";
 import { useGameLogic } from "../hooks/useGameLogic";
 
-export default function GamePage({ onFinish }) {
-  const { round, score, scrambledWord, userInput, setUserInput, checkAnswer } =
-    useGameLogic();
+export default function GamePage() {
+  const {
+    round,
+    score,
+    scrambledWord,
+    userInput,
+    timeLeft,
+    setUserInput,
+    checkAnswer,
+    restartGame,
+  } = useGameLogic();
+
+  const [finishedData, setFinishedData] = useState(null);
 
   const handleCheck = () => {
     const result = checkAnswer();
-    if (result.finished) {
-      onFinish(score);
-    }
+    if (result.finished) setFinishedData(result);
   };
 
   return (
     <div className="page game-page">
-      <h2>Раунд {round} з 5</h2>
+      <h2>Раунд {round}</h2>
       <p>Очки: {score}</p>
+
+      {timeLeft !== null && timeLeft > 0 && <p>⏳ {timeLeft} сек</p>}
 
       <h3 className="scrambled">{scrambledWord}</h3>
 
@@ -28,14 +39,16 @@ export default function GamePage({ onFinish }) {
         className="input"
       />
 
-      <div style={{ marginTop: "20px" }}>
-        <Button text="Перевірити ✅" onClick={handleCheck} />
-        <Button
-          text="Завершити гру ❌"
-          type="secondary"
-          onClick={() => onFinish(score)}
+      <Button text="Перевірити" onClick={handleCheck} />
+
+      {finishedData && (
+        <GameFinishModal
+          score={finishedData.score}
+          maxRounds={finishedData.maxRounds}
+          onRestart={restartGame}
+          onNext={() => window.location.reload()}
         />
-      </div>
+      )}
     </div>
   );
 }
