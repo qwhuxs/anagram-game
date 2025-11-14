@@ -11,25 +11,22 @@ export default function App() {
   const [stage, setStage] = useState("start");
   const [finalScore, setFinalScore] = useState(0);
 
+  const handleGameFinish = (score) => {
+    console.log("Game finished with score:", score);
+    setFinalScore(score);
+    setStage("result");
+  };
+
   return (
     <GameSettingsProvider>
       <Header />
-
-      {stage === "start" && (
-        <StartPage onStart={() => setStage("settings")} />
+      {stage === "start" && <StartPage onStart={() => setStage("settings")} />}
+      {stage === "settings" && <SettingsPage onStart={() => setStage("game")} />}
+      {stage === "game" && (
+        <GamePage onFinish={handleGameFinish} />
       )}
-
-      {stage === "settings" && (
-        <SettingsPage onStart={() => setStage("game")} />
-      )}
-
-      {stage === "game" && <GamePage onFinish={setFinalScore} />}
-
       {stage === "result" && (
-        <ResultPage
-          score={finalScore}
-          onRestart={() => setStage("start")}
-        />
+        <ResultPage score={finalScore} onRestart={() => setStage("start")} />
       )}
     </GameSettingsProvider>
   );
