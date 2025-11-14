@@ -1,52 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import GameFinishModal from "../components/GameFinishModal";
 import { useGameLogic } from "../hooks/useGameLogic";
 
-export default function GamePage() {
+export default function GamePage({ onFinish }) {
   const {
     round,
     score,
     scrambledWord,
     userInput,
     timeLeft,
+    gameFinished,
     setUserInput,
     checkAnswer,
     restartGame,
+    maxRounds
   } = useGameLogic();
 
-  const [finishedData, setFinishedData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const isLastRound = round >= maxRounds;
 
   const handleCheck = () => {
     const result = checkAnswer();
-    if (result.finished) setFinishedData(result);
+    if (result.finished) {
+      setShowModal(true);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleCheck();
+    }
+  };
+
+  const handleFinishGame = () => {
+    onFinish(score);
+  };
+
+  useEffect(() => {
+    if (gameFinished) {
+      setShowModal(true);
+    }
+  }, [gameFinished]);
+
+  const handleRestart = () => {
+    restartGame();
+    setShowModal(false);
+  };
+
+  const handleNextRound = () => {
+    setShowModal(false);
+    onFinish(score);
   };
 
   return (
     <div className="page game-page">
-      <h2>Раунд {round}</h2>
+      <h2>Раунд {round} з {maxRounds}</h2>
       <p>Очки: {score}</p>
-
-      {timeLeft !== null && timeLeft > 0 && <p>⏳ {timeLeft} сек</p>}
-
+      {timeLeft > 0 && (
+        <p className="timer">⏳ {timeLeft} сек</p>
+      )}
       <h3 className="scrambled">{scrambledWord}</h3>
-
       <input
         type="text"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
-        placeholder="Введи слово"
+        onKeyPress={handleKeyPress}
+        placeholder="Вгадай тварину"
         className="input"
+        autoFocus
       />
-
-      <Button text="Перевірити" onClick={handleCheck} />
-
-      {finishedData && (
+      
+      <div className="game-buttons">
+        <Button text="Перевірити" onClick={handleCheck} />
+        
+        {/* Кнопка завершення гри з'являється на останньому раунді */}
+        {isLastRound && (
+          <Button 
+            text="Завершити гру 🏁" 
+            type="secondary" 
+            onClick={handleFinishGame} 
+          />
+        )}
+      </div>
+      
+      {showModal && (
         <GameFinishModal
-          score={finishedData.score}
-          maxRounds={finishedData.maxRounds}
-          onRestart={restartGame}
-          onNext={() => window.location.reload()}
+          score={score}
+          maxRounds={maxRounds}
+          onRestart={handleRestart}
+          onNext={handleNextRound}
         />
       )}
     </div>
